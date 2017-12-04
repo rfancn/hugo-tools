@@ -9,17 +9,18 @@ def parse_args():
     elif argc == 3:
         return sys.argv[1], sys.argv[2]
 
+
     print("Invalid command args!")
     return None, None
 
 if __name__ == "__main__":
-    content_dir, exclude_regex = parse_args()
+    content_dir, config_file = parse_args()
     if not content_dir:
         print("Please input content dir!")
         sys.exit(1)
 
-    tools = hugotools.HugoTools(content_dir)
-    matched_files = tools.match_files(exclude_regex)
+    tools = hugotools.HugoTools(content_dir, config_file)
+    matched_files = tools.match_files()
     for root, filename in matched_files:
         changed, publish_filename = tools.publish(root, filename)
         if publish_filename:
